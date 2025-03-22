@@ -56,6 +56,18 @@ const Index = () => {
 
     document.addEventListener('mousemove', moveCursor);
     
+    // Handle header scroll effect
+    const header = document.querySelector('.site-header');
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        header?.classList.add('scrolled');
+      } else {
+        header?.classList.remove('scrolled');
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    
     // Animation with vanilla JS
     const animateElements = () => {
       const elements = document.querySelectorAll('.animate-on-scroll');
@@ -88,9 +100,11 @@ const Index = () => {
     // Run animations once on initial load and fetch data
     animateElements();
     fetchPythonData();
+    handleScroll(); // Initialize header state
     
     return () => {
       document.removeEventListener('mousemove', moveCursor);
+      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('scroll', animateElements);
     };
   }, []);
@@ -123,14 +137,15 @@ const Index = () => {
             <span className="line">Digital</span>
             <span className="line">Experiences</span>
           </h1>
-          <p className="animate-on-scroll">Award-winning marketing agency specializing in brand transformation</p>
-          <div className="cta-container animate-on-scroll">
+          <p className="animate-on-scroll animate-delay-200">Award-winning marketing agency specializing in brand transformation</p>
+          <div className="cta-container animate-on-scroll animate-delay-300">
             <a href="#contact" className="cta-button">Start a Project</a>
           </div>
           <div className="abstract-elements">
             <div className="circle"></div>
             <div className="square"></div>
             <div className="triangle"></div>
+            <div className="blob"></div>
           </div>
         </div>
       </section>
@@ -149,7 +164,7 @@ const Index = () => {
               <h3>Strategic Branding</h3>
               <p>We craft unique brand identities that communicate your values and connect with your audience.</p>
             </div>
-            <div className="service-card animate-on-scroll">
+            <div className="service-card animate-on-scroll animate-delay-200">
               <div className="service-icon">
                 <svg viewBox="0 0 24 24" width="64" height="64">
                   <rect x="3" y="3" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" strokeWidth="1" />
@@ -160,7 +175,7 @@ const Index = () => {
               <h3>Web Development</h3>
               <p>Responsive, engaging websites that deliver exceptional user experiences across all devices.</p>
             </div>
-            <div className="service-card animate-on-scroll">
+            <div className="service-card animate-on-scroll animate-delay-400">
               <div className="service-icon">
                 <svg viewBox="0 0 24 24" width="64" height="64">
                   <path d="M12 19l7-7 3 3-7 7-3-3z" fill="none" stroke="currentColor" strokeWidth="1" />
@@ -190,7 +205,7 @@ const Index = () => {
                 <p>Brand Strategy, Web Design</p>
               </div>
             </div>
-            <div className="work-item animate-on-scroll">
+            <div className="work-item animate-on-scroll animate-delay-200">
               <div className="work-image" style={{ backgroundColor: '#e8e8f5' }}>
                 <div className="placeholder-text">PROJECT 02</div>
               </div>
@@ -199,7 +214,7 @@ const Index = () => {
                 <p>Identity, Digital Marketing</p>
               </div>
             </div>
-            <div className="work-item animate-on-scroll">
+            <div className="work-item animate-on-scroll animate-delay-400">
               <div className="work-image" style={{ backgroundColor: '#f5e8e8' }}>
                 <div className="placeholder-text">PROJECT 03</div>
               </div>
@@ -218,10 +233,10 @@ const Index = () => {
           <div className="about-grid">
             <div className="about-content">
               <h2 className="section-title animate-on-scroll">About Us</h2>
-              <p className="animate-on-scroll">We are a collective of thinkers, designers, and developers passionate about creating meaningful digital experiences that drive business results.</p>
-              <p className="animate-on-scroll">Founded in 2015, our agency has grown from a small team of three to an award-winning digital powerhouse with offices in New York and London.</p>
+              <p className="animate-on-scroll animate-delay-200">We are a collective of thinkers, designers, and developers passionate about creating meaningful digital experiences that drive business results.</p>
+              <p className="animate-on-scroll animate-delay-300">Founded in 2015, our agency has grown from a small team of three to an award-winning digital powerhouse with offices in New York and London.</p>
             </div>
-            <div className="about-stats animate-on-scroll">
+            <div className="about-stats animate-on-scroll animate-delay-400">
               <div className="python-integration">
                 <h4>Data from Python Backend:</h4>
                 {isLoading ? (
@@ -232,10 +247,10 @@ const Index = () => {
                       {JSON.stringify(backendData, null, 2)}
                     </pre>
                     <div className="stats-display">
-                      <p><strong>Clients:</strong> {backendData.agency_stats.clients}</p>
-                      <p><strong>Projects:</strong> {backendData.agency_stats.projects}</p>
-                      <p><strong>Satisfaction Rate:</strong> {backendData.agency_stats.satisfaction}%</p>
-                      <p><strong>Technologies:</strong> {backendData.technologies.join(', ')}</p>
+                      <p><strong>Clients:</strong> <span>{backendData.agency_stats.clients}</span></p>
+                      <p><strong>Projects:</strong> <span>{backendData.agency_stats.projects}</span></p>
+                      <p><strong>Satisfaction Rate:</strong> <span>{backendData.agency_stats.satisfaction}%</span></p>
+                      <p><strong>Technologies:</strong> <span>{backendData.technologies.join(', ')}</span></p>
                     </div>
                   </div>
                 ) : (
@@ -252,7 +267,7 @@ const Index = () => {
         <div className="container">
           <h2 className="section-title animate-on-scroll">Get in Touch</h2>
           <div className="contact-grid">
-            <div className="contact-info animate-on-scroll">
+            <div className="contact-info animate-on-scroll animate-delay-200">
               <p>Ready to start your next project? We'd love to hear from you.</p>
               <div className="contact-details">
                 <p><strong>Email:</strong> hello@abstract.agency</p>
@@ -260,7 +275,7 @@ const Index = () => {
                 <p><strong>Address:</strong> 123 Creative St, New York, NY 10001</p>
               </div>
             </div>
-            <div className="contact-form-container animate-on-scroll">
+            <div className="contact-form-container animate-on-scroll animate-delay-300">
               <form id="contactForm" className="contact-form" onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="name">Name</label>
